@@ -11,8 +11,8 @@ class MonitoringAlert < ApplicationRecord
 
   validate :reference_at_not_in_future
 
-  scope :by_status, ->(value) { where(status: value) if value.present? }
-  scope :by_kind, ->(value) { where(kind: value) if value.present? }
+  scope :by_status, ->(value) { where(status: value) if statuses.key?(value.to_s) }
+  scope :by_kind, ->(value) { where(kind: value) if kinds.key?(value.to_s) }
   scope :ordered_by_reference, ->(direction) do
     order(reference_at: direction.to_s.downcase == "asc" ? :asc : :desc)
   end
