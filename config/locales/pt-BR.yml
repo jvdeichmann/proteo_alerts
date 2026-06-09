@@ -1,0 +1,26 @@
+pt-BR:
+  activerecord:
+    models:
+      person: Pessoa
+      monitoring_alert: Alerta de monitoramento
+    attributes:
+      person:
+        name: Nome
+        document: Documento
+      monitoring_alert:
+        kind: Tipo
+        amount: Valor
+        status: Status
+        reference_at: Data de referência
+    errors:
+      messages:
+        blank: não pode ficar em branco
+        taken: já está em uso
+        greater_than: deve ser maior que %{count}
+        not_a_number: não é um número
+  errors:
+    messages:
+      blank: não pode ficar em branco
+      taken: já está em uso
+      greater_than: deve ser maior que %{count}
+      not_a_number: não é um número

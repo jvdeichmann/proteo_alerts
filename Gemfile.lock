@@ -153,7 +153,6 @@ GEM
       racc (~> 1.4)
     nokogiri (1.19.3-x86_64-linux-musl)
       racc (~> 1.4)
-    pagy (9.4.0)
     parallel (2.1.0)
     parser (3.3.11.1)
       ast (~> 2.4.1)
@@ -305,7 +304,6 @@ DEPENDENCIES
   brakeman
   debug
   factory_bot_rails (~> 6.4)
-  pagy (~> 9.0)
   pg (~> 1.1)
   puma (>= 5.0)
   rails (~> 7.2.3, >= 7.2.3.1)
