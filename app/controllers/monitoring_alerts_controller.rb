@@ -26,7 +26,7 @@ class MonitoringAlertsController < ApplicationController
     if result.success?
       render json: result.value, status: :created
     else
-      render_errors(result.errors, status: :unprocessable_entity)
+      render_errors(result.errors, status: :unprocessable_content)
     end
   end
 
@@ -48,7 +48,7 @@ class MonitoringAlertsController < ApplicationController
     if result.success?
       render json: result.value, status: :ok
     else
-      render_errors(result.errors, status: :unprocessable_entity)
+      render_errors(result.errors, status: :unprocessable_content)
     end
   end
 
