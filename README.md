@@ -41,7 +41,7 @@ para desenvolvimento e podem ser sobrescritas por variáveis de ambiente:
 bundle exec rspec
 ```
 
-São 60 exemplos cobrindo models, services (camada de domínio) e requests
+São 62 exemplos cobrindo models, services (camada de domínio) e requests
 (todos os endpoints, incluindo os caminhos de erro).
 
 ## Endpoints
