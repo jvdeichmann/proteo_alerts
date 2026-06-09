@@ -23,11 +23,11 @@ RSpec.describe ListMonitoringAlerts do
     end
 
     it 'ordena ascendente por reference_at' do
-      expect(described_class.call(order: 'asc')).to eq([debit, sanction, pep])
+      expect(described_class.call(order: 'asc')).to eq([ debit, sanction, pep ])
     end
 
     it 'ordena descendente por padrão' do
-      expect(described_class.call).to eq([pep, sanction, debit])
+      expect(described_class.call).to eq([ pep, sanction, debit ])
     end
   end
 end

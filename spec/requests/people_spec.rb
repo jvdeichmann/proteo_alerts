@@ -32,10 +32,11 @@ RSpec.describe 'People', type: :request do
     end
 
     context 'sem o root param person' do
-      it 'retorna 422' do
+      it 'retorna 400 (bad request)' do
         post '/people', params: {}
 
-        expect(response).to have_http_status(:unprocessable_content)
+        expect(response).to have_http_status(:bad_request)
+        expect(response.parsed_body['errors']).to be_present
       end
     end
   end

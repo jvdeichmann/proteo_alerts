@@ -14,6 +14,6 @@ class ApplicationController < ActionController::API
   end
 
   def render_bad_request(exception)
-    render_errors(exception.message, status: :unprocessable_content)
+    render_errors(exception.message, status: :bad_request)
   end
 end

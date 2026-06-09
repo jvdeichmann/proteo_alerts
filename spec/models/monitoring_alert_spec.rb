@@ -86,11 +86,11 @@ RSpec.describe MonitoringAlert, type: :model do
 
     describe '.ordered_by_reference' do
       it 'ordena ascendente' do
-        expect(described_class.ordered_by_reference('asc')).to eq([pending_debit, pending_sanction, approved_pep])
+        expect(described_class.ordered_by_reference('asc')).to eq([ pending_debit, pending_sanction, approved_pep ])
       end
 
       it 'ordena descendente por padrão' do
-        expect(described_class.ordered_by_reference('desc')).to eq([approved_pep, pending_sanction, pending_debit])
+        expect(described_class.ordered_by_reference('desc')).to eq([ approved_pep, pending_sanction, pending_debit ])
       end
     end
   end

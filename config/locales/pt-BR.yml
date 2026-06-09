@@ -8,6 +8,7 @@ pt-BR:
         name: Nome
         document: Documento
       monitoring_alert:
+        person: Pessoa
         kind: Tipo
         amount: Valor
         status: Status
@@ -18,6 +19,7 @@ pt-BR:
         taken: já está em uso
         greater_than: deve ser maior que %{count}
         not_a_number: não é um número
+        required: deve existir
   errors:
     messages:
       blank: não pode ficar em branco

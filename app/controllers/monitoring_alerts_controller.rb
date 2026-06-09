@@ -2,7 +2,7 @@ class MonitoringAlertsController < ApplicationController
   DEFAULT_PER_PAGE = 20
   MAX_PER_PAGE = 100
 
-  before_action :set_alert, only: [:approve, :reject]
+  before_action :set_alert, only: [ :approve, :reject ]
 
   def index
     scope = ListMonitoringAlerts.call(filter_params)
@@ -63,14 +63,14 @@ class MonitoringAlertsController < ApplicationController
   end
 
   def page
-    @page ||= [params.fetch(:page, 1).to_i, 1].max
+    @page ||= [ params.fetch(:page, 1).to_i, 1 ].max
   end
 
   def per_page
     @per_page ||= begin
       value = params.fetch(:per_page, DEFAULT_PER_PAGE).to_i
       value = DEFAULT_PER_PAGE if value <= 0
-      [value, MAX_PER_PAGE].min
+      [ value, MAX_PER_PAGE ].min
     end
   end
 end

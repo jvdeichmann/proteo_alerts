@@ -44,6 +44,15 @@ RSpec.describe 'MonitoringAlerts', type: :request do
         expect(response).to have_http_status(:unprocessable_content)
         expect(response.parsed_body['errors']).to include('Data de referência não pode estar no futuro')
       end
+
+      it 'retorna 422 quando person_id não existe' do
+        post '/monitoring_alerts', params: {
+          monitoring_alert: { person_id: 0, kind: 'pep', reference_at: 1.day.ago }
+        }
+
+        expect(response).to have_http_status(:unprocessable_content)
+        expect(response.parsed_body['errors']).to include('Pessoa deve existir')
+      end
     end
   end
 
@@ -63,19 +72,25 @@ RSpec.describe 'MonitoringAlerts', type: :request do
     it 'filtra por kind' do
       get '/monitoring_alerts', params: { kind: 'debit' }
 
-      expect(response.parsed_body['data'].map { |a| a['kind'] }).to eq(['debit'])
+      expect(response.parsed_body['data'].map { |a| a['kind'] }).to eq([ 'debit' ])
     end
 
     it 'filtra por status' do
       get '/monitoring_alerts', params: { status: 'approved' }
 
-      expect(response.parsed_body['data'].map { |a| a['id'] }).to eq([pep.id])
+      expect(response.parsed_body['data'].map { |a| a['id'] }).to eq([ pep.id ])
     end
 
     it 'ordena ascendente por reference_at' do
       get '/monitoring_alerts', params: { order: 'asc' }
 
-      expect(response.parsed_body['data'].map { |a| a['id'] }).to eq([debit.id, sanction.id, pep.id])
+      expect(response.parsed_body['data'].map { |a| a['id'] }).to eq([ debit.id, sanction.id, pep.id ])
+    end
+
+    it 'usa ordem descendente quando order é inválido' do
+      get '/monitoring_alerts', params: { order: 'qualquer' }
+
+      expect(response.parsed_body['data'].map { |a| a['id'] }).to eq([ pep.id, sanction.id, debit.id ])
     end
 
     it 'pagina os resultados' do

@@ -5,14 +5,15 @@ class MonitoringAlert < ApplicationRecord
   enum :status, { pending: 0, approved: 1, rejected: 2 }, prefix: true
 
   validates :kind, presence: true
-  validates :status, presence: true
   validates :reference_at, presence: true
   validates :amount, presence: true, numericality: { greater_than: 0 }, if: :financial?
 
   validate :reference_at_not_in_future
 
-  scope :by_status, ->(value) { where(status: value) if statuses.key?(value.to_s) }
-  scope :by_kind, ->(value) { where(kind: value) if kinds.key?(value.to_s) }
+  # Filtros tolerantes: valor inválido/ausente não quebra a cadeia de scopes,
+  # apenas não restringe o resultado (retorna a relation completa).
+  scope :by_status, ->(value) { statuses.key?(value.to_s) ? where(status: value) : all }
+  scope :by_kind, ->(value) { kinds.key?(value.to_s) ? where(kind: value) : all }
   scope :ordered_by_reference, ->(direction) do
     order(reference_at: direction.to_s.downcase == "asc" ? :asc : :desc)
   end

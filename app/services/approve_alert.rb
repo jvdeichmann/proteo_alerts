@@ -11,7 +11,7 @@ class ApproveAlert
 
   def call
     unless @alert.status_pending?
-      return Result.failure(["Alerta só pode ser aprovado quando está pendente"])
+      return Result.failure([ "Alerta só pode ser aprovado quando está pendente" ])
     end
 
     @alert.status_approved!
