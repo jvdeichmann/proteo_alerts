@@ -142,6 +142,11 @@ Todos os erros seguem o mesmo formato, com status HTTP adequado
   PostgreSQL garante a integridade mesmo sob concorrência; a validação no
   model fornece a mensagem amigável no fluxo normal.
 
+- **Defesa em profundidade no banco.** Além das validações de aplicação,
+  há uma CHECK constraint (`amount IS NULL OR amount > 0`) garantindo a
+  integridade do valor mesmo para escritas fora do Rails (migrações de
+  dados, acesso direto ao banco).
+
 - **`status` não é aceito na criação.** Todo alerta nasce `pending` e só
   muda via endpoints de transição — evita criar um alerta já aprovado
   burlando a regra de negócio.
@@ -171,6 +176,13 @@ Todos os erros seguem o mesmo formato, com status HTTP adequado
 - **Sem autenticação/autorização.** Fora do escopo do teste; em produção
   haveria autenticação (ex.: JWT) e escopo de acesso por usuário.
 
-- **Sem versionamento de API nem serializers dedicados.** As respostas
-  usam o JSON padrão do Rails. Em um projeto maior, eu adicionaria
-  namespace `/api/v1` e serializers (ex.: `ActiveModel::Serializer`/`jsonapi`).
+- **Sem versionamento de API.** Mantive as rotas exatamente como o
+  enunciado pediu (`/people`, `/monitoring_alerts`) para não divergir do
+  contrato solicitado. Numa API com clientes externos eu adotaria
+  namespace `/api/v1` desde o início, para evoluir sem quebrar consumidores.
+
+- **Sem serializers dedicados.** As respostas usam o JSON padrão do Rails,
+  suficiente para o escopo (poucos campos, sem relacionamentos aninhados
+  nem campos sensíveis). Com payloads mais ricos eu introduziria
+  serializers (ex.: `ActiveModel::Serializer`/`jsonapi-serializer`) para
+  controlar formato e versão da representação.

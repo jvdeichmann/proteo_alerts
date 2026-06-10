@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2026_06_09_231218) do
+ActiveRecord::Schema[7.2].define(version: 2026_06_10_001446) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -26,6 +26,7 @@ ActiveRecord::Schema[7.2].define(version: 2026_06_09_231218) do
     t.index ["person_id"], name: "index_monitoring_alerts_on_person_id"
     t.index ["reference_at"], name: "index_monitoring_alerts_on_reference_at"
     t.index ["status"], name: "index_monitoring_alerts_on_status"
+    t.check_constraint "amount IS NULL OR amount > 0::numeric", name: "monitoring_alerts_amount_positive"
   end
 
   create_table "people", force: :cascade do |t|

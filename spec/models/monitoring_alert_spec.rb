@@ -104,6 +104,15 @@ RSpec.describe MonitoringAlert, type: :model do
     end
   end
 
+  describe 'constraints de banco' do
+    it 'rejeita amount <= 0 mesmo ignorando as validações (defesa em profundidade)' do
+      alert = build(:monitoring_alert, :debit, amount: 0)
+
+      expect { alert.save(validate: false) }
+        .to raise_error(ActiveRecord::StatementInvalid, /monitoring_alerts_amount_positive/)
+    end
+  end
+
   describe '#financial?' do
     it { expect(build(:monitoring_alert, :debit).financial?).to be(true) }
     it { expect(build(:monitoring_alert, :credit).financial?).to be(true) }
