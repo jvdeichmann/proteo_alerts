@@ -40,7 +40,7 @@ group :development, :test do
   gem "factory_bot_rails", "~> 6.4"
 
   # One-liner matchers for tests [https://github.com/thoughtbot/shoulda-matchers]
-  gem "shoulda-matchers", "~> 6.0"
+  gem "shoulda-matchers", "~> 7.0"
 
   # Static analysis for security vulnerabilities [https://brakemanscanner.org/]
   gem "brakeman", require: false
