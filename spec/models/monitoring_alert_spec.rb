@@ -92,6 +92,15 @@ RSpec.describe MonitoringAlert, type: :model do
       it 'ordena descendente por padrão' do
         expect(described_class.ordered_by_reference('desc')).to eq([ approved_pep, pending_sanction, pending_debit ])
       end
+
+      it 'mantém ordem estável (desempate por id) quando reference_at é igual' do
+        same_time = 1.hour.ago
+        first  = create(:monitoring_alert, :pep, reference_at: same_time)
+        second = create(:monitoring_alert, :pep, reference_at: same_time)
+
+        ids = described_class.where(id: [ first.id, second.id ]).ordered_by_reference('asc').map(&:id)
+        expect(ids).to eq([ first.id, second.id ])
+      end
     end
   end
 

@@ -41,8 +41,12 @@ para desenvolvimento e podem ser sobrescritas por variáveis de ambiente:
 bundle exec rspec
 ```
 
-São 62 exemplos cobrindo models, services (camada de domínio) e requests
+São 63 exemplos cobrindo models, services (camada de domínio) e requests
 (todos os endpoints, incluindo os caminhos de erro).
+
+O projeto roda CI no GitHub Actions (`.github/workflows/ci.yml`) com três
+jobs: análise de segurança (Brakeman), lint (RuboCop) e a suíte RSpec
+contra um PostgreSQL de serviço.
 
 ## Endpoints
 
@@ -144,6 +148,15 @@ Todos os erros seguem o mesmo formato, com status HTTP adequado
 
 - **Localização pt-BR.** Mensagens de validação e de erro em português,
   coerentes com o domínio.
+
+- **Transições seguras sob concorrência.** `ApproveAlert`/`RejectAlert`
+  usam `with_lock` (transação + row lock): dois pedidos simultâneos de
+  aprovação são serializados, evitando que ambos vejam o alerta como
+  `pending` e a regra de transição seja burlada.
+
+- **Ordenação estável.** A listagem ordena por `reference_at` com `id`
+  como critério de desempate, garantindo ordem consistente entre páginas
+  quando há datas iguais (sem registros "pulando" de página).
 
 ## Trade-offs conhecidos
 

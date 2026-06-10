@@ -15,7 +15,10 @@ class MonitoringAlert < ApplicationRecord
   scope :by_status, ->(value) { statuses.key?(value.to_s) ? where(status: value) : all }
   scope :by_kind, ->(value) { kinds.key?(value.to_s) ? where(kind: value) : all }
   scope :ordered_by_reference, ->(direction) do
-    order(reference_at: direction.to_s.downcase == "asc" ? :asc : :desc)
+    dir = direction.to_s.downcase == "asc" ? :asc : :desc
+    # id como desempate garante ordem estável entre páginas quando há
+    # reference_at iguais (evita registros "pulando" de página).
+    order(reference_at: dir, id: dir)
   end
 
   def financial?
